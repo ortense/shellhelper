@@ -1,0 +1,16 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+    echo "Usage: explore path/to/directory"
+    exit 1
+fi
+
+mkdir -p "$1"
+
+dir="$(realpath "$1")"
+
+if [ -n "$FILEMANAGER" ]; then
+    "$FILEMANAGER" "$dir"
+else
+    echo "Environment variable FILEMANAGER not defined"
+    exit 1
+fi

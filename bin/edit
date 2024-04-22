@@ -1,0 +1,14 @@
+#! /bin/bash
+if [ -z "$1" ]; then
+    echo "usage: edit path/to/file"
+    exit 1
+fi
+
+new $1
+
+if [ -n "$EDITOR" ]; then
+    "$EDITOR" "$1"
+else
+    echo "Environment Variables EDITOR not defined"
+    exit 1
+fi

@@ -1,0 +1,13 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+    echo "usage: exists path/to/target"
+    exit 1
+fi
+
+target="$(realpath "$1")"
+
+if [ -e "$target" ]; then
+    echo "true"
+else
+    echo "false"
+fi

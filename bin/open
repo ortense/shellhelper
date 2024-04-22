@@ -1,0 +1,42 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+    echo "usage: open path/to/file/or/dir"
+    exit 1
+fi
+
+path="$1"
+
+is_existing_file() {
+  local arg="$1"
+  [ -f "$arg" ]
+}
+
+is_existing_directory() {
+  local arg="$1"
+  [ -d "$arg" ]
+}
+
+get_last_fragment() {
+    local arg="$1"
+    echo "${arg##*/}"
+}
+
+if is_existing_file "$path"; then
+  edit "$path"
+
+elif is_existing_directory "$path"; then
+  explore "$path"
+
+else
+  last_fragment=$(get_last_fragment "$path")
+
+  if [[ "$path" == */ ]]; then
+    explore "$path"
+
+  elif [[ "$last_fragment" == *.* ]]; then
+    edit "$path"
+
+  else
+    explore "$path"
+  fi
+fi
